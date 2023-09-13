@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>재고 관리 프로그램</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+
+    <!--dropdown-->
+    <script src="/static/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<!--세션유무확인-->
+{% if not session["userid"] %}
+    <script>
+        alert("로그인이 필요합니다")
+        location.href = "/"
+    </script>
+{% endif %}
+
+<!--관리자세션확인-->
+{% if session["userid"] != 'manager' %}
+    <script>
+        alert("해당페이지는 관리자만 접근가능합니다.")
+        location.href = "/"
+    </script>
+{% endif %}
+
+<!--login.html 에서 nav bar 제거 및 login section 높이 수정-->
+<nav class="navbar navbar-expand-md navbar-light border-bottom navbar-custom">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Project</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="dailylist">당일 조회</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="inventory">전체 조회</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="inventoryPayment">재고수불부</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="report">일자별 수불</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="current-page-text  nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink"
+                       role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        데이터 설정
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <li><a class="dropdown-item nav-dropdown-item" href="addMIP">MIP 추가</a></li>
+                        <li><a class="dropdown-item nav-dropdown-item" href="setInvalidEngine">불량 엔진 추가</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <button type="button" onclick="location.href='/refresh'" class="reload-btn">
+                <img src="/static/assets/img/reload.png" alt="새로고침">
+            </button>
+            <button class="logout-btn" onclick="location.href='/logout'">log out</button>
+        </div>
+    </div>
+</nav>
+<section class="d-flex flex-wrap mt-5 mx-5 addmip-section justify-content-around">
+    <div class="mt-4 mip-card">
+        <div class="container py-5">
+            <div class="row d-flex justify-content-center align-items-center ">
+                <div class="col col-md-10">
+                    <div class="card" style="border-radius: 1rem;">
+                        <div class="d-flex align-items-center">
+                            <div class="card-body p-sm-4 text-black m-3">
+
+                                <form action="/addMIP" method="post">
+                                    <div class="d-flex align-items-center mb-3 pb-1">
+                                        <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
+                                        <span class="h1 fw-bold mb-0">MIP 추가</span>
+                                    </div>
+                                    <!--<h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Text</h5>-->
+
+                                    <div class="mb-3">
+                                        <input type="text" name="mip" id="mip" class="form-control form-control-sm"
+                                               placeholder="" autofocus>
+                                        <label class="form-label data-setting-comment" for="mip">mip를 입력해주세요</label>
+                                    </div>
+                                    <div class="mb-2">
+                                        <input type="text" name="type" id="type" class="form-control form-control-sm"
+                                               placeholder="" autofocus>
+                                        <label class="form-label data-setting-comment" for="type">기종을 입력해주세요</label>
+                                    </div>
+                                    <!--<a class="small text-muted" href="#!">abc</a>-->
+                                    <div class="mb-3">
+                                        <button class="btn btn-dark btn-lg data-setting-btn-block" type="submit">저장
+                                        </button>
+                                    </div>
+                                </form>
+
+                                <div class="mb-2">
+                                    <button class="btn btn-dark btn-lg btn-block data-setting-btn-block" type="button"
+                                            onclick="location.href='/main'">홈화면
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="mip-table-container mt-4 mx-5">
+        <table class="mip-table table table-bordered table-striped table-hover">
+            <thead>
+            <th>번호</th>
+            <th>MIP</th>
+            <th>기종</th>
+            </thead>
+            <tbody>
+            {% for a in mipList %}
+                <tr>
+                    <th scope="row"></th>
+                    {% for b in a %}
+                        <td>{{ b }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+</section>
+</body>
+</html>

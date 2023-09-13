@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+<script defer src="https://pyscript.net/latest/pyscript.js"></script>
+
+<style>
+span = {
+	color = red;
+}
+</style>
+{% endblock %}
+ 
+{% block content %}
+    <h1>{{ans}}님의 MBTI는 <span>{{result}}</span>입니다.</h1>
+	<a href="{{ detail }}" class="btn btn-primary">More Information</a>
+	<hr><h3>특징</h3><p>
+    {% for explain in explains %}
+    <p>{{explain}}
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html lang="kr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="201812419 조성운">
+    <meta name="subtitle" content="project">
+    <meta name="description" content="Programming Application Project">
+ 
+    {% if title %}
+      <title>프로그래밍응용 Project - {{ title }}</title>
+    {% else %}
+      <title>프로그래밍응용 Project</title>
+    {% endif %}
+ 
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='iconfont.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='new.css') }}">
+    
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='layout.css') }}">
+    {% block stylesheet %}{% endblock %}
+  </head>
+ 
+    <body style="padding-top: 0px;">
+        <nav class="navbar navbar-expand navbar-dark bg-dark">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="{{ url_for('index') }}" class="navbar-brand">Programming</a>
+                </div>
+                <div class="navbar-header">
+                    <a  href="{{ url_for('aboutPyscript') }}" class="navbar-brand">Py-Script란?</a>
+                </div>
+                <div class="navbar-header">
+                    <a  href="{{ url_for('hw1') }}" class="navbar-brand">HW1</a>
+                </div>
+                <div class="navbar-header">
+                    <a href="{{ url_for('hw2') }}" class="navbar-brand">HW2</a>
+                </div>
+                <div class="navbar-header">
+                    <a href="{{ url_for('start') }}" class="navbar-brand">InventoryManagement</a>
+                </div>
+                <div class="navbar-header">
+                    <a href="{{ url_for('mbti') }}" class="navbar-brand">MBTI</a>
+                </div>
+            </div>
+        </nav>
+    
+        <div class="jumbotron">
+            <div class="container">
+                {% if title %}
+                    <h1 class="display-3">{{title}}</h1>
+                {% else %}
+                    <h1 class="display-3">Project</h1>
+                {% endif %}
+                
+                {% block title_content %}{% endblock %}
+            </div>
+        </div>
+
+        <main role="main">
+            <div class="container">
+                <div class="container">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <hr>
+                <div class="container">
+                    <span>&copy; 2022 Programming Application Project / 201812419 조성운 </span>
+                </div>
+            <br>
+        </footer>
+    </body>
+</html>

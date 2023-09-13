@@ -1,0 +1,179 @@
+{% extends 'layout.html' %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+<script defer src="https://pyscript.net/latest/pyscript.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+function start() {
+    $(".start").hide();
+    $(".question").show();
+    next();
+}
+</script>
+
+<style>
+.question {
+   display: none;
+}
+</style>
+
+{% endblock %}
+ 
+{% block content %}
+  <h1>MBTI</h1>
+  <main class="form-signin w-100 m-auto">
+        <form method = "POST", action="{{ url_for('mbti_result') }}">
+        <p>당신의 이름은 무엇인가요?</p>
+        <input type="text" class="form-control" id = "ans" name="ans" placeholder="ex) 조성운" ></input><br>
+        <h5>1번</h5><p>
+          <div class="btn-group1" role="group1" aria-label="Basic radio toggle button group" name="ei1">
+            <input type="radio" class="btn-check" name="1" id="1-1" value ='e'>
+            <label class="btn btn-outline-primary" for="1-1">사람들 만나는것을 즐기고,말하기를 좋아하는 편</label>
+
+            <input type="radio" class="btn-check" name="1" id="1-2" value = 'i'>
+            <label class="btn btn-outline-primary" for="1-2">혼자있는것을 선호하고, 말하는것보다 듣는걸 좋아하는 편</label>
+          </div>
+          <p><h5>2번</h5><p>
+          <div class="btn-group2" role="group2" aria-label="Basic radio toggle button group" name="ei1">
+              <input type="radio" class="btn-check" name="2" id="2-1" value = 'e' autocomplete="off">
+            <label class="btn btn-outline-primary" for="2-1">다양한 일을 하기를 좋아하고 다재다능한게 좋다</label>
+
+            <input type="radio" class="btn-check" name="2" id="2-2" value = 'i' autocomplete="off">
+            <label class="btn btn-outline-primary" for="2-2">한가지일을 깊이있게 아는게 더 중요하다</label>
+          </div>
+          <p><h5>3번</h5><p>
+          <div class="btn-group3" role="group3" aria-label="Basic radio toggle button group" name="ei1">
+              <input type="radio" class="btn-check" name="3" id="3-1" value = 'e' autocomplete="off">
+            <label class="btn btn-outline-primary" for="3-1">생각보다 행동이 먼저 나가는 편, 진행이 빠른편</label>
+
+            <input type="radio" class="btn-check" name="3" id="3-2" value = 'i' autocomplete="off">
+            <label class="btn btn-outline-primary" for="3-2">행동하기전에 여러번 생각하고, 조심스럽게 진행하는 편</label>
+          </div>
+          <p><h5>4번</h5><p>
+          <div class="btn-group4" role="group4" aria-label="Basic radio toggle button group" name="ei1">
+              <input type="radio" class="btn-check" name="4" id="4-1" value = 'e' autocomplete="off">
+            <label class="btn btn-outline-primary" for="4-1">활동적인 여가생활을 좋아하는 편</label>
+
+            <input type="radio" class="btn-check" name="4" id="4-2" value = 'i' autocomplete="off">
+            <label class="btn btn-outline-primary" for="4-2">조용하고 편안한 여가생활이 더 좋은 편</label>
+          </div>
+          <p><h5>5번</h5><p>
+          <div class="btn-group" role="group" aria-label="Basic radio toggle button group" name="ei1">
+              <input type="radio" class="btn-check" name="5" id="5-1" value = 's' autocomplete="off">
+            <label class="btn btn-outline-primary" for="5-1">정보를 찾을때 그것만 찾는다</label>
+
+            <input type="radio" class="btn-check" name="5" id="5-2" value = 'n' autocomplete="off">
+            <label class="btn btn-outline-primary" for="5-2">범주의 개념부터 정리하려고 한다. </label>
+          </div>
+    <p><h5>6번</h5><p>
+          <div class="btn-group" role="group" aria-label="Basic radio toggle button group" name="ei1">
+              <input type="radio" class="btn-check" name="6" id="6-1" value = 's' autocomplete="off">
+            <label class="btn btn-outline-primary" for="6-1">현재에 충실하는 나</label>
+
+            <input type="radio" class="btn-check" name="6" id="6-2" value = 'n' autocomplete="off">
+            <label class="btn btn-outline-primary" for="6-2">미래를 상상하고 그리며 사는 나 </label>
+          </div>          
+
+          <p><h5>7번</h5><p>
+
+          <div class="btn-group" role="group" aria-label="Basic radio toggle button group" name="ei1">
+              <input type="radio" class="btn-check" name="7" id="7-1" value = 's' autocomplete="off">
+            <label class="btn btn-outline-primary" for="7-1">직접적인 경험을 토대로 믿는 사람</label>
+
+            <input type="radio" class="btn-check" name="7" id="7-2" value = 'n' autocomplete="off">
+            <label class="btn btn-outline-primary" for="7-2">경험없이도 사실을 받아드리는 나 </label>
+          </div>          
+          <p><h5>8번</h5><p>
+          <div class="btn-group" role="group" aria-label="Basic radio toggle button group" name="ei1">
+              <input type="radio" class="btn-check" name="8" id="8-1" value = 's' autocomplete="off">
+            <label class="btn btn-outline-primary" for="8-1">꽃을 받으면 향기를 맡거나 만져보는 사람</label>
+
+            <input type="radio" class="btn-check" name="8" id="8-2" value = 'n' autocomplete="off">
+            <label class="btn btn-outline-primary" for="8-2">꽃을 보며 이야기나 생각을 하는 사람 </label>
+          </div>          
+          <p><h5>9번</h5><p>
+          <div class="btn-group" role="group" aria-label="Basic radio toggle button group" name="ei1">
+              <input type="radio" class="btn-check" name="9" id="9-1" value = 's' autocomplete="off">
+            <label class="btn btn-outline-primary" for="9-1">일이 절차적이고 반복적인것 익숙한것을 좋아하는 사람</label>
+
+            <input type="radio" class="btn-check" name="9" id="9-2" value = 'n' autocomplete="off">
+            <label class="btn btn-outline-primary" for="9-2">새로운것을 경험하고 배우기를 좋아하는 사람  </label>
+          </div>          
+          <p><h5>10번</h5><p>
+          <div class="btn-group" role="group" aria-label="Basic radio toggle button group" name="ei1">
+              <input type="radio" class="btn-check" name="10" id="10-1" value = 's' autocomplete="off">
+            <label class="btn btn-outline-primary" for="10-1">실용적 학문을 좋아하는 사람</label>
+
+            <input type="radio" class="btn-check" name="10" id="10-2" value = 'n' autocomplete="off">
+            <label class="btn btn-outline-primary" for="10-2">이론적 학문을 배우려하는 사람 </label>
+          </div>     
+          
+          <p><h5>11번</h5><p>
+          <div class="btn-group" role="group" aria-label="Basic radio toggle button group" name="ei1">
+              <input type="radio" class="btn-check" name="11" id="11-1" value = 't' autocomplete="off">
+            <label class="btn btn-outline-primary" for="11-1">일에 있어서 냉정한 사람이 좋다</label>
+
+            <input type="radio" class="btn-check" name="11" id="11-2" value = 'f' autocomplete="off">
+            <label class="btn btn-outline-primary" for="11-2">일을 잘 못해도 따듯한 사람이 좋다 </label>
+          </div>     
+          <p><h5>12번</h5><p>
+          <div class="btn-group" role="group" aria-label="Basic radio toggle button group" name="ei1">
+              <input type="radio" class="btn-check" name="12" id="12-1" value = 't' autocomplete="off">
+            <label class="btn btn-outline-primary" for="12-1">자기주장이 뚜렷하고 맞는 방향으로 이끌려 하는 사람</label>
+
+            <input type="radio" class="btn-check" name="12" id="12-2" value = 'f' autocomplete="off">
+            <label class="btn btn-outline-primary" for="12-2">모든이들의 이야기에 귀 귀울이는 사람 </label>
+          </div>     
+          <p><h5>13번</h5><p>
+          <div class="btn-group" role="group" aria-label="Basic radio toggle button group" name="ei1">
+              <input type="radio" class="btn-check" name="13" id="13-1" value = 't' autocomplete="off">
+            <label class="btn btn-outline-primary" for="13-1">틀린것은 확실하고 명확하게 잘못된것이라고 말하는 사람</label>
+
+            <input type="radio" class="btn-check" name="13" id="13-2" value = 'f' autocomplete="off">
+            <label class="btn btn-outline-primary" for="13-2">틀린것에 감정 상하지않게 좋은 아이디어였다고 격려하는 사람  </label>
+          </div>     
+        
+          
+          <p><h5>14번</h5><p> 
+          <div class="btn-group" role="group" aria-label="Basic radio toggle button group" name="ei1">
+              <input type="radio" class="btn-check" name="14" id="14-1" value = 'j' autocomplete="off">
+            <label class="btn btn-outline-primary" for="14-1">계획적이고 결정을 빨리하는 편</label>
+
+            <input type="radio" class="btn-check" name="14" id="14-2" value = 'p' autocomplete="off">
+            <label class="btn btn-outline-primary" for="14-2">기분에따라 즉흥적이고 결정이 느린편</label>
+          </div>     
+          <p><h5>15번</h5><p>
+          <div class="btn-group" role="group" aria-label="Basic radio toggle button group" name="ei1">
+              <input type="radio" class="btn-check" name="15" id="15-1" value = 'j' autocomplete="off">
+            <label class="btn btn-outline-primary" for="15-1">상황을 통제하려하거나 관리를 하는편</label>
+
+            <input type="radio" class="btn-check" name="15" id="15-2" value = 'p' autocomplete="off">
+            <label class="btn btn-outline-primary" for="15-2">상황에 지배되거나 다른 사람의 관리를 받는 편</label>
+          </div>     
+          <p><h5>16번</h5><p>
+          <div class="btn-group" role="group" aria-label="Basic radio toggle button group" name="ei1">
+              <input type="radio" class="btn-check" name="16" id="16-1" value = 'j' autocomplete="off">
+            <label class="btn btn-outline-primary" for="16-1">생활공간이 정리된 편이고, 조직적인 생활을 하는편</label>
+
+            <input type="radio" class="btn-check" name="16" id="16-2" value = 'p' autocomplete="off">
+            <label class="btn btn-outline-primary" for="16-2">정리가 잘안되고 조직적인 것보다 자유로운 편</label>
+          </div>     
+          <p><h5>17번</h5><p>
+          <div class="btn-group" role="group" aria-label="Basic radio toggle button group" name="ei1">
+              <input type="radio" class="btn-check" name="17" id="17-1" value = 'j' autocomplete="off">
+            <label class="btn btn-outline-primary" for="17-1">일에 있어 과정보다 완성된 결과를 즐기고 기뻐하는 편</label>
+
+            <input type="radio" class="btn-check" name="17" id="17-2" value = 'p' autocomplete="off">
+            <label class="btn btn-outline-primary" for="17-2">일이 진행되는 과정이 즐거우면 결과가 안좋아도 긍정적인 편 </label>
+          </div>     
+          
+          <button class="w-100 btn btn-lg btn-primary" type="submit">확인 하기</button>
+        </form>
+    </main>
+    
+    <py-script>
+    #import MBTI
+    #MBTI()
+    </py-script>
+{% endblock %}

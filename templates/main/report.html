@@ -1,0 +1,126 @@
+<!DOCTYPE>
+<html>
+<head>
+    <title>재고 관리 프로그램</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <!--dropdown-->
+    <script src="/static/js/bootstrap.bundle.min.js"></script>
+
+    <!--datepicker-->
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script type='text/javascript' src='//code.jquery.com/jquery-1.8.3.js'></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
+    <script type='text/javascript'
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="/static/js/javascript.js"></script>
+</head>
+
+<body>
+<!--세션유무확인-->
+{% if not session["userid"] %}
+    <script>
+        alert("로그인이 필요합니다")
+        location.href = "/"
+    </script>
+{% endif %}
+
+<!--worker계정일때 거부-->
+{% if session["userid"] == "worker" %}
+    <script>
+        alert("worker계정으로는 해당 페이지에 접근할 수 없습니다.")
+        location.href = "/"
+    </script>
+{% endif %}
+
+<nav class="navbar navbar-expand-md navbar-light border-bottom navbar-custom">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Project</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="dailylist">당일 조회</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="inventory">전체 조회</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="inventoryPayment">재고수불부</a>
+                </li>
+                <li class="nav-item">
+                    <a class="current-page-text nav-link" href="report">일자별 수불</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        데이터 설정
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <li><a class="dropdown-item nav-dropdown-item" href="addMIP">MIP 추가</a></li>
+                        <li><a class="dropdown-item nav-dropdown-item" href="setInvalidEngine">불량 엔진 추가</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <button type="button" onclick="location.href='/refresh'" class="reload-btn">
+                <img src="/static/assets/img/reload.png" alt="새로고침">
+            </button>
+            <button class="logout-btn" onclick="location.href='/logout'">log out</button>
+        </div>
+    </div>
+</nav>
+
+<!--datepicker-->
+<form action="/report" class="datepicker-calendar-container my-3" method="post">
+    <div class="d-flex flex-wrap my-2">
+        <div class="input-group date datepicker-calendar">
+            <input type="text" value="{{ startdate }}" class="form-control" name="startdate" value="{{ startdate }}"
+                   id="startDatepicker-report" autocomplete='off' placeholder="ex) 2022-01-01">
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-calendar"></i>
+            </span>
+        </div>
+        <span>~</span>
+        <div class="input-group date datepicker-calendar">
+            <input type="text" value="{{ enddate }}" class="form-control" name="enddate" value="{{ enddate }}"
+                   id="endDatepicker-report" autocomplete='off' placeholder="ex) 2022-12-31">
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-calendar"></i>
+            </span>
+        </div>
+        <button type="submit" class="datepicker-btn" onclick="return CheckDate()">조회</button>
+        <div id="printDate"></div>
+    </div>
+</form>
+
+<div>
+    <div class="report-table-wrapper">
+        {{ table|safe }}
+    </div>
+</div>
+</div>
+</body>
+<script type='text/javascript'>
+    $(function () {
+        $('.input-group.date').datepicker({
+            calendarWeeks: false,
+            todayHighlight: true,
+            autoclose: true,
+            format: "yyyy-mm-dd",
+            language: "kr",
+            endDate: '0d',
+            disableTouchKeyboard: false
+        });
+    });
+</script>
+</html>
